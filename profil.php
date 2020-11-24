@@ -7,9 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profil</title>
     <link rel="stylesheet" href="style/bootstrap.css"
-    <link rel="stylesheet" href="style/global.css"
-    <link rel="stylesheet" href="style/profil.css"
-</head>
 <body>
 <!--Inclusion header-->
 <?php require 'header.php'; ?>

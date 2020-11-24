@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>index</title>
     <link rel="stylesheet" href="style/bootstrap.css"
-    <link rel="stylesheet" href="style/global.css"
-    <link rel="stylesheet" href="style/discussion.css"
 
 
 </head>

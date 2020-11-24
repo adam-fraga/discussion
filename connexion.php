@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connexion</title>
     <link rel="stylesheet" href="style/bootstrap.css"
-    <link rel="stylesheet" href="style/global.css"
-    <link rel="stylesheet" href="connexion.php"
 </head>
 <body>
 <!--Inclusion header-->

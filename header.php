@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Header</title>
     <link rel="stylesheet" href="style/bootstrap.css"
-    <link rel="stylesheet" href="style/global.css"
     <link rel="stylesheet" href="style/header-footer.css"
 </head>
 <body>
