@@ -16,7 +16,7 @@ if (isset($_POST['subscribe'])) {
 //            Controle que les mot de passes match entre eux et soit bien saisit
             if (!empty($_POST['password']) == htmlspecialchars($_POST['confpassword'])) {
                 $user_login = htmlspecialchars($_POST['login']);
-                $user_pass = crypt(htmlspecialchars($_POST['password'], CRYPT_BLOWFISH));
+                $user_pass = password_hash($_POST['password'],CRYPT_BLOWFISH);
                 $prepare_query = "INSERT INTO `utilisateurs` (login , password) VALUES ('$user_login','$user_pass')";
 //                Execute requête d'insertion DB
                 $subscribe_query = mysqli_query($discussion, $prepare_query);

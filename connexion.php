@@ -1,3 +1,30 @@
+<?php
+require'config/db.php';
+session_start();
+$_SESSION['user']['connected'] = false;
+
+//initialise request
+$preparePullQuery = "SELECT * FROM utilisateurs WHERE 1";
+//Execut request
+$query = mysqli_query($discussion, $preparePullQuery);
+//Pull data from DB
+$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
+//Decrypt password
+
+if (isset($_POST['connexion'])) {
+    foreach ($data as $value) {
+        if (!empty(htmlspecialchars($_POST['login'])) == $value['login']) {
+            {
+                $pass = $value['password'];
+                if (password_verify($_POST['password'], $pass) == true) {
+                    $_SESSION['user'] = $_POST;
+                    $_SESSION['user']['connected'] = true;
+                }
+            }
+        }
+    }
+}
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -14,27 +41,29 @@
 <!--JUMBOTRON-->
 <div class="jumbotron text-center ">
     <h1 class="display-3 text-info ">Connecte toi vite!</h1>
-    <p class="lead">Tes collègues n'attendent plus que toi pour pouvoir partager leurs idées et leur projets. Alors connecte
+    <p class="lead">Tes collègues n'attendent plus que toi pour pouvoir partager leurs idées et leur projets. Alors
+        connecte
         toi en remplissant le formulaire ci dessous et rejoins vite le fil de Discussion!</p>
 
 </div>
 <!--Formulaire-->
-<form class="col-3 text-center  mx-auto my-5">
+<form action="connexion.php" method="post" class="col-3 text-center  mx-auto my-5">
     <fieldset>
         <legend>Formulaire de connexion</legend>
         <div class="form-group row">
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Identifiant</label>
-            <input type="text" class="text-center form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <label for="exampleInputLogin">Identifiant</label>
+            <input name="login" type="text" class="text-center form-control" id="exampleInputLogin"
+                   aria-describedby="loginHelp"
                    placeholder="Saisissez votre identifiant">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Mot de passe</label>
             <input type="password" class="text-center form-control" id="exampleInputPassword1"
-                   placeholder="Saisissez votre mot de passe">
+                   name="password" placeholder="Saisissez votre mot de passe">
         </div>
-        <button type="button" class="btn btn-info" name="inscription">Connexion</button>
+        <button type="submit" class="btn btn-info" name="connexion">Connexion</button>
     </fieldset>
 </form>
 <!--Inclusion footer-->

@@ -13,9 +13,6 @@ if (!$discussion)
     die("Error\:".mysqli_connect_error() );
 }
 
-echo "<pre>";
-print_r($discussion);
-echo "</pre>";
 
 //CLOSE DB
 

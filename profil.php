@@ -1,3 +1,8 @@
+<?php
+require'config/db.php';
+session_start();
+
+?>
 <!doctype html>
 <html lang="fr">
 <head>
