@@ -9,8 +9,8 @@ if (isset($_SESSION['user'])) {
 //Variables
 $user_login = NULL;
 $user_password = NULL;
-$wrongPass = true;
-$wrongLogin = true;
+$wrongPass = NULL;
+$wrongLogin = NULL;
 
 $pull_data = "SELECT * FROM utilisateurs";
 
@@ -44,23 +44,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-echo "POST";
-
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-
-echo "SESSION";
-
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-
-echo "DATA";
-
-echo "<pre>";
-print_r($data);
-echo "</pre>";
 
 ?>
 <!doctype html>
@@ -85,7 +68,7 @@ echo "</pre>";
 <!--Formulaire-->
 <form action="profil.php" method="post" class="col-3 text-center  mx-auto my-5">
     <fieldset>
-        <legend>Formulaire de modification</legend>
+        <legend class="font-weight-bolder text-info">Formulaire de modification</legend>
         <div class="form-group row">
 
         </div>

@@ -33,13 +33,15 @@
                 <a class="nav-link" href="profil.php">Modifier mes informations</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="connexion.php">Connexion</a>
+                <a class="nav-link connexion" href="connexion.php">Connexion</a>
             </li>
         </ul>
     </div>
-    <form method="post">
-        <button type="button" class="btn btn-outline-danger" name="logout">Deconnexion</button>
+    <form method="post" action="header.php">
+        <button type="submit" class="btn btn-outline-danger" name="logout">Deconnexion</button>
     </form>
+    <!--DECONNEXION-->
+    <?php if (isset($_POST['logout'])) {session_destroy(); header("location: connexion.php");}?>
 </nav>
 </header>
 </body>

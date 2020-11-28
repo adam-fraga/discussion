@@ -4,37 +4,24 @@ require 'config/db.php';
 //Demarrage Session
 session_start();
 //Variables
-$wrongpass = NULL;
-$toolong = NULL;
-$emptylogin = NULL;
+$badInfo = NULL;
+
 //Controle action boutton
 if (isset($_POST['subscribe'])) {
 //    Controle de la longueur du login
-    if (strlen($_POST['login']) < 50) {
-//        Controle que le login soit bien saisit
-        if (!empty($_POST['login'])) {
-//            Controle que les mot de passes match entre eux et soit bien saisit
-            if (!empty($_POST['password']) == htmlspecialchars($_POST['confpassword'])) {
-                $user_login = htmlspecialchars($_POST['login']);
-                $user_pass = password_hash($_POST['password'],CRYPT_BLOWFISH);
-                $prepare_query = "INSERT INTO `utilisateurs` (login , password) VALUES ('$user_login','$user_pass')";
+    if (strlen($_POST['login']) < 50 && !empty($_POST['login']) && !empty($_POST['password']) && htmlspecialchars($_POST['password']) == htmlspecialchars($_POST['confpassword'])) {
+        $user_login = htmlspecialchars($_POST['login']);
+        $user_pass = password_hash($_POST['password'], CRYPT_BLOWFISH);
+        $prepare_query = "INSERT INTO `utilisateurs` (login , password) VALUES ('$user_login','$user_pass')";
 //                Execute requête d'insertion DB
-                $subscribe_query = mysqli_query($discussion, $prepare_query);
+        $subscribe_query = mysqli_query($discussion, $prepare_query);
 //                REDIRIGE VERS PAGE DE CONNEXION
-                header("location: connexion.php");
-            } else {
-                $wrongpass = true;
-            }
-        } else {
-            $emptylogin = true;
-        }
+        header("location: connexion.php");
     } else {
-        $toolong = true;
+        $badInfo = true;
     }
 }
-
 ?>
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -82,12 +69,8 @@ if (isset($_POST['subscribe'])) {
             <small id="emailHelp" class="form-text  text-warning">Ne communiquez jamais votre mot de passe!</small>
         </div>
         <button type="submit" class="btn btn-info" name="subscribe">Valider</button>
-        <?php if ($wrongpass == true) {
-            echo '<div class="fail_report">' . "Vos mots de passes ne correspondent pas." . '</div>';
-        } elseif ($toolong == true) {
-            echo '<div class="fail_report">' . "Votre login est beaucoup trop long!" . '</div>';
-        } elseif ($emptylogin == true) {
-            echo '<div class="fail_report">' . "Vos mots de passes ne correspondent pas." . '</div>';
+        <?php if ($badInfo == true) {
+            echo "<p class='text-danger font-weight-bold my-5'>Les informations saisit sont inorrect</p>";
         } ?>
 
     </fieldset>

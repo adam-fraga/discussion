@@ -1,7 +1,9 @@
 <?php
-require'config/db.php';
+require 'config/db.php';
 session_start();
-$_SESSION['user']['connected'] = false;
+//Initialisation variable
+$_SESSION['user']['connected'] = NULL;
+$wrongId = NULL;
 
 //initialise request
 $preparePullQuery = "SELECT * FROM utilisateurs WHERE 1";
@@ -9,21 +11,34 @@ $preparePullQuery = "SELECT * FROM utilisateurs WHERE 1";
 $query = mysqli_query($discussion, $preparePullQuery);
 //Pull data from DB
 $data = mysqli_fetch_all($query, MYSQLI_ASSOC);
-//Decrypt password
 
+//Si action boutton
 if (isset($_POST['connexion'])) {
+//    Parcourt tableaux DB
     foreach ($data as $value) {
-        if (!empty(htmlspecialchars($_POST['login'])) == $value['login']) {
-            {
-                $pass = $value['password'];
-                if (password_verify($_POST['password'], $pass) == true) {
-                    $_SESSION['user'] = $_POST;
-                    $_SESSION['user']['connected'] = true;
-                }
+        if (!empty(htmlspecialchars($_POST['login'])) && (htmlspecialchars($_POST['login'])) == $value['login']) {
+
+            $pass = $value['password'];
+
+            //Decrypt password
+            if (password_verify($_POST['password'], $pass) == true) {
+//                    Stock saisit utilisateur dans la session
+                $_SESSION['user']['login'] = $_POST['login'];
+//                    Definit status connecté
+                $_SESSION['user']['connected'] = true;
+                //              RECUP ID USER
+                $_SESSION['user']['id_user'] = $value['id'];
+                header("location: discussion.php");
+            } else {
+                $wrongid = true;
             }
+
+        } else {
+            $wrongid = true;
         }
     }
 }
+
 ?>
 <!doctype html>
 <html lang="fr">
@@ -49,7 +64,7 @@ if (isset($_POST['connexion'])) {
 <!--Formulaire-->
 <form action="connexion.php" method="post" class="col-3 text-center  mx-auto my-5">
     <fieldset>
-        <legend>Formulaire de connexion</legend>
+        <legend class="font-weight-bolder text-info">Formulaire de connexion</legend>
         <div class="form-group row">
         </div>
         <div class="form-group">
@@ -65,8 +80,9 @@ if (isset($_POST['connexion'])) {
         </div>
         <button type="submit" class="btn btn-info" name="connexion">Connexion</button>
     </fieldset>
+    <?php if ($wrongId==true){echo "<p class='text-danger my-5 font-weight-bold'>Vos identifiants sont incorrects</p>";}    ?>
 </form>
-<!--Inclusion footer-->
+    <!--Inclusion footer-->
 <?php require 'footer.php'; ?>
 </body>
 </html>
